@@ -1,24 +1,11 @@
-<template>
-
-  <div></div>
-
-</template>
-
-<script setup lang='ts'>
-import { ref, reactive } from 'vue';
-
-</script>
-
-<style scoped>
-
-</style>
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from '@/components/HelloWorld.vue'
+import CodeRain from './components/CodeRain.vue';
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
@@ -29,9 +16,14 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
-  </header>
-
+  </header> -->
   <RouterView />
+  <CodeRain />
+  <!-- <nav>
+    <RouterLink to="/">Home</RouterLink>
+    <RouterLink to="/about">About</RouterLink>
+    <RouterLink to="/login">Login</RouterLink>
+  </nav> -->
 </template>
 
 <style scoped>
@@ -40,6 +32,7 @@ header {
   max-height: 100vh;
 }
 
+/* 
 .logo {
   display: block;
   margin: 0 auto 2rem;
@@ -95,5 +88,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
-</style> -->
+} */
+</style>
