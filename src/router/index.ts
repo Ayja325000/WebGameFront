@@ -1,15 +1,29 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
+import Index from '@/views/Index.vue'
+
+export enum ROUTERS {
+  INDEX = '/',
+  HOME = '/home',
+  ABOUT = '/about',
+  LOGIN = '/login'
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: ROUTERS.INDEX,
+      name: 'index',
+      component: Index
+    },
+    {
+      path: ROUTERS.HOME,
       name: 'home',
       component: HomeView
     },
     {
-      path: '/about',
+      path: ROUTERS.ABOUT,
       name: 'about',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -17,7 +31,7 @@ const router = createRouter({
       component: () => import('@/views/AboutView.vue')
     },
     {
-      path: '/login',
+      path: ROUTERS.LOGIN,
       name: 'login',
       component: () => import('@/views/Login.vue')
     }

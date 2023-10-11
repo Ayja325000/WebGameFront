@@ -17,6 +17,7 @@ async function post(url = "", data = {}): Promise<any> {
     // credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
+      credentials: "include"
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     // redirect: "follow", // manual, *follow, error

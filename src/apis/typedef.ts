@@ -26,5 +26,8 @@ export interface visitorLoginReq {
   nickname: string
 }
 export interface visitorLoginRes extends resposne {
-  data: userId;
+  data: {
+    nickname: string;
+    visitorId: userId
+  };
 }

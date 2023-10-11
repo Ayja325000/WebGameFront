@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <h1>Visitor Login</h1>
+    <h1>Login</h1>
     <form @submit.prevent="visitorLogin" v-if="isVisitor">
       <div class="form-group">
         <label for="nickname">Please input a nickname:</label>
@@ -23,12 +23,17 @@
     </form>
     <p v-if="error" class="error">{{ error }}</p>
   </div>
+  <CodeRain />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { login as loginRequest, visitorLogin as visitorRequest } from '@/apis';
 import { useRouter } from 'vue-router';
+import CodeRain from '@/components/CodeRain.vue';
+import { KEYS, LOGIN_STATUS, setLocalStore } from '@/utils/localStorage';
+import { ROUTERS } from '@/router';
+
 const isVisitor = ref(false);
 const username = ref('');
 const password = ref('');
@@ -39,18 +44,39 @@ const router = useRouter();
 const login = () => {
   loginRequest({ username: username.value, password: password.value })
     .then((res) => {
-      console.log(res);
-      router.push({ path: '/' });
+      if (res.status === 0) {
+        console.log(res);
+        setLocalStore({
+          [KEYS.LOGIN_STATUS]: LOGIN_STATUS.VISITOR,
+          [KEYS.UID]: res.data.uid,
+          [KEYS.NICK_NAME]: res.data.nickname,
+          [KEYS.USER_NAME]: res.data.username
+        });
+        router.push({ path: ROUTERS.HOME });
+      } else {
+        error.value = res.message ?? '';
+      }
     });
 };
 
 const visitorLogin = async () => {
   let res = await visitorRequest({ nickname: nickname.value });
-  console.log(res);
-  router.push({ path: '/' });
+  if (res.status === 0) {
+    console.log(res);
+    setLocalStore({
+      [KEYS.LOGIN_STATUS]: LOGIN_STATUS.VISITOR,
+      [KEYS.UID]: res.data.visitorId,
+      [KEYS.NICK_NAME]: res.data.nickname,
+      [KEYS.USER_NAME]: res.data.nickname
+    });
+    router.push({ path: ROUTERS.HOME });
+  } else {
+    error.value = res.message ?? '';
+  }
 }
 
 const changeLoginType = () => {
+  error.value = '';
   isVisitor.value = !isVisitor.value;
 }
 </script>
