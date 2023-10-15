@@ -1,6 +1,9 @@
 <template>
   <div id='head-page'>
     <button @click.prevent="logout" id="logout">Logout</button>
+
+    <button id="search-button">Search Games</button>
+    <button id="roomid-button">Search Room</button>
   </div>
 </template>
 

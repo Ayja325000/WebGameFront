@@ -1,31 +1,31 @@
 export type userId = string;
 export type status = number;
 
-export interface userInfo {
+export interface UserInfo {
   username: string,
   nickname: string,
   uid: userId
 }
 
-export interface resposne {
+export interface Resposne {
   status?: status,
   message?: string,
   details?: string,
   data: any
 }
 
-export interface loginReq {
+export interface LoginReq {
   username: string,
   password: string
 }
-export interface loginRes extends resposne {
-  data: userInfo;
+export interface LoginRes extends Resposne {
+  data: UserInfo;
 }
 
-export interface visitorLoginReq {
+export interface VisitorLoginReq {
   nickname: string
 }
-export interface visitorLoginRes extends resposne {
+export interface VisitorLoginRes extends Resposne {
   data: {
     nickname: string;
     visitorId: userId

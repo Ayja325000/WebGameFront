@@ -1,3 +1,19 @@
+import type { UserInfo } from "@/apis/typedef";
+
+export enum KEYS {
+  LOGIN_STATUS = 'loginStatus',
+  UID = 'userId',
+  USER_NAME = 'username',
+  NICK_NAME = 'nickname',
+  COOKIE = 'cookie'
+}
+export enum LOGIN_STATUS {
+  NOT = 'not-login',
+  VISITOR = 'visitor',
+  USER = 'common-user',
+  ADMIN = 'super-user'
+}
+
 export function setLocalStore(items: {}) {
   let entries = Object.entries(items);
   entries.forEach(([key, value]) => {
@@ -26,21 +42,11 @@ export function removeLocalStorage(keys: string | string[]) {
     });
   }
 }
-
+const userInforKeys = [KEYS.UID, KEYS.LOGIN_STATUS, KEYS.NICK_NAME, KEYS.USER_NAME];
 export function clearUserInfo() {
-  removeLocalStorage([KEYS.UID, KEYS.LOGIN_STATUS, KEYS.NICK_NAME, KEYS.USER_NAME]);
+  removeLocalStorage(userInforKeys);
 }
 
-export enum KEYS {
-  LOGIN_STATUS = 'loginStatus',
-  UID = 'userId',
-  USER_NAME = 'username',
-  NICK_NAME = 'nickname',
-  COOKIE = 'cookie'
-}
-export enum LOGIN_STATUS {
-  NOT = 'not-login',
-  VISITOR = 'visitor',
-  USER = 'common-user',
-  ADMIN = 'super-user'
+export const getUserInfo: () => UserInfo = () => {
+  return getLocalStore(userInforKeys);
 }

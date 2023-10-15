@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <canvas id="canvas"></canvas>
+  </div>
+  <script>
+    const BOARD_WIDTH = 512;
+    const BOARD_HEIGHT = 512;
+    const KLEE_WIDTH = 64;
+    const KLEE_HEIGHT = 64;
+    // Create the canvas
+    // var canvas = document.createElement("canvas");
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    canvas.width = BOARD_WIDTH;
+    canvas.height = BOARD_HEIGHT;
+    // document.body.appendChild(canvas);
+
+    // Background image
+    var bgReady = false;
+    var bgImage = new Image();
+    bgImage.onload = function () {
+      bgReady = true;
+    };
+    bgImage.src = "images/background.jpg";
+
+    // klee image
+    var kleeReady = false;
+    var kleeImage = new Image();
+    kleeImage.onload = function () {
+      kleeReady = true;
+    };
+    kleeImage.src = "images/klee.jpg";
+
+    // nahida image
+    var nahidaReady = false;
+    var nahidaImage = new Image();
+    nahidaImage.onload = function () {
+      nahidaReady = true;
+    };
+    nahidaImage.src = "images/nahida.jpg";
+
+    // Game objects
+    var klee = {
+      speed: BOARD_WIDTH / 2 // movement in pixels per second
+    };
+    var nahida = {};
+    var nahidasCaught = 0;
+
+    // Handle keyboard controls
+    var keysDown = {};
+
+    addEventListener("keydown", function (e) {
+      keysDown[e.keyCode] = true;
+    }, false);
+
+    addEventListener("keyup", function (e) {
+      delete keysDown[e.keyCode];
+    }, false);
+
+    // Reset the game when the player catches a nahida
+    var reset = function () {
+
+      // Throw the nahida somewhere on the screen randomly
+      nahida.x = 32 + (Math.random() * (canvas.width - 64));
+      nahida.y = 32 + (Math.random() * (canvas.height - 64));
+    };
+
+    // Update game objects
+    var update = function (modifier) {
+      if (87 in keysDown) { // Player holding up
+        klee.y -= klee.speed * modifier;
+      }
+      if (83 in keysDown) { // Player holding down
+        klee.y += klee.speed * modifier;
+      }
+      if (65 in keysDown) { // Player holding left
+        klee.x -= klee.speed * modifier;
+      }
+      if (68 in keysDown) { // Player holding right
+        klee.x += klee.speed * modifier;
+      }
+      klee.x = Math.min(klee.x, BOARD_WIDTH - KLEE_WIDTH);
+      klee.x = Math.max(klee.x, 0);
+      klee.y = Math.min(klee.y, BOARD_HEIGHT - KLEE_HEIGHT);
+      klee.y = Math.max(klee.y, 0);
+
+      if (73 in keysDown) { // Player holding up
+        nahida.y -= klee.speed * modifier * 2;
+      }
+      if (75 in keysDown) { // Player holding down
+        nahida.y += klee.speed * modifier * 2;
+      }
+      if (74 in keysDown) { // Player holding left
+        nahida.x -= klee.speed * modifier * 2;
+      }
+      if (76 in keysDown) { // Player holding right
+        nahida.x += klee.speed * modifier * 2;
+      }
+
+      nahida.x = Math.min(nahida.x, BOARD_WIDTH - KLEE_WIDTH);
+      nahida.x = Math.max(nahida.x, 0);
+      nahida.y = Math.min(nahida.y, BOARD_HEIGHT - KLEE_HEIGHT);
+      nahida.y = Math.max(nahida.y, 0);
+
+      // Are they touching?
+      if (
+        klee.x <= (nahida.x + KLEE_WIDTH / 2)
+        && nahida.x <= (klee.x + KLEE_WIDTH / 2)
+        && klee.y <= (nahida.y + KLEE_HEIGHT / 2)
+        && nahida.y <= (klee.y + KLEE_HEIGHT / 2)
+      ) {
+        ++nahidasCaught;
+        reset();
+      }
+    };
+
+    // Draw everything
+    var render = function () {
+      if (bgReady) {
+        ctx.drawImage(bgImage, 0, 0);
+      }
+
+      if (nahidaReady) {
+        ctx.drawImage(nahidaImage, nahida.x, nahida.y);
+      }
+
+      if (kleeReady) {
+        ctx.drawImage(kleeImage, klee.x, klee.y);
+      }
+
+      // Score
+      ctx.fillStyle = "rgb(250, 250, 250)";
+      ctx.font = "24px Helvetica";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "top";
+      ctx.fillText("Klee caught Nahida: " + nahidasCaught, 32, 32);
+    };
+
+    // The main game loop
+    var main = function () {
+      var now = Date.now();
+      var delta = now - then;
+
+      update(delta / 1000);
+      render();
+
+      then = now;
+
+      // Request to do this again ASAP
+      requestAnimationFrame(main);
+    };
+
+    // Cross-browser support for requestAnimationFrame
+    var w = window;
+    requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+
+    // Let's play this game!
+    var then = Date.now();
+    klee.x = canvas.width / 2;
+    klee.y = canvas.height / 2;
+    reset();
+    main();
+  </script>
+</body>
+
+</html>

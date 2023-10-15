@@ -6,7 +6,9 @@ export enum ROUTERS {
   INDEX = '/',
   HOME = '/home',
   ABOUT = '/about',
-  LOGIN = '/login'
+  LOGIN = '/login',
+  GAME = '/game',
+  TEST = '/test'
 }
 
 const router = createRouter({
@@ -34,6 +36,11 @@ const router = createRouter({
       path: ROUTERS.LOGIN,
       name: 'login',
       component: () => import('@/views/Login.vue')
+    },
+    {
+      path: ROUTERS.TEST,
+      name: 'TEST',
+      component: () => import('@/components/games/WebsocketTest.vue')
     }
   ]
 })

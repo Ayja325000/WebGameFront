@@ -9,6 +9,7 @@
 
       <input type="text" id="search-input" v-model="seacrhStore.searchValue" placeholder="Search games ...">
       <input type="text" id="roomid-input" v-model="seacrhStore.roomid" placeholder="Search room (by room No.) ...">
+
       <button id="changeView" @click.prevent="back">BACK</button>
     </div>
   </main>
@@ -58,13 +59,13 @@ function back() {
 }
 
 .currentView {
-  animation: 1s slidein;
+  animation: 1.2s slidein;
   position: fixed;
   z-index: 10;
 }
 
 .backView {
-  animation: 1s slideout;
+  animation: 1.2s slideout;
   position: fixed;
   z-index: -10;
   top: 100vh;
@@ -132,14 +133,14 @@ function back() {
 #search-input {
   position: fixed;
   left: 100px;
-  top: 50px;
+  top: 20px;
   z-index: 100;
 }
 
 #roomid-input {
   position: fixed;
   left: 100px;
-  top: 100px;
+  top: 40px;
   z-index: 100;
 }
 </style>

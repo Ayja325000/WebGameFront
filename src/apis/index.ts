@@ -1,4 +1,4 @@
-import type { loginReq, loginRes, userId, visitorLoginReq, visitorLoginRes } from "./typedef";
+import type { LoginReq, LoginRes, userId, VisitorLoginReq, VisitorLoginRes } from "./typedef";
 
 // GET method implementation:
 async function get(url = "", params = {}): Promise<any> {
@@ -39,5 +39,5 @@ enum APIS {
 }
 
 export const getUsers: () => Promise<userId[]> = () => get(url(APIS.USER_LIST));
-export const login: (data: loginReq) => Promise<loginRes> = (data) => post(url(APIS.LOGIN), data);
-export const visitorLogin: (data: visitorLoginReq) => Promise<visitorLoginRes> = (data) => post(url(APIS.LOGIN_VISITOR), data);
+export const login: (data: LoginReq) => Promise<LoginRes> = (data) => post(url(APIS.LOGIN), data);
+export const visitorLogin: (data: VisitorLoginReq) => Promise<VisitorLoginRes> = (data) => post(url(APIS.LOGIN_VISITOR), data);
