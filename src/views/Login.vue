@@ -7,7 +7,7 @@
         <input type="text" id="nickname" v-model="nickname" required>
       </div>
       <button type="submit">Enter</button>
-      <span @click.prevent="changeLoginType">Change to Login</span>
+      <span @click.prevent="changeLoginType">Change to User Login.</span>
     </form>
     <form @submit.prevent="login" v-else>
       <div class="form-group">
@@ -19,7 +19,7 @@
         <input type="password" id="password" v-model="password" required>
       </div>
       <button type="submit">Login</button>
-      <span @click.prevent="changeLoginType">Enter as a visitor...</span>
+      <span @click.prevent="changeLoginType">Change to visitor Login.</span>
     </form>
     <p v-if="error" class="error">{{ error }}</p>
   </div>

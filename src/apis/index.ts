@@ -35,9 +35,19 @@ enum APIS {
   LOGIN = 'login',
   LOGIN_VISITOR = 'visitor-login',
 
-  USER_LIST = 'user'
+  USER_LIST = 'user',
+
+  ROOM_CREATE = 'create-room',
+  ROOM_SEARCH = 'search-room',
+  ROOM_JOIN = 'join-room',
+  ROOM_EXIT = 'exit-room',
 }
 
 export const getUsers: () => Promise<userId[]> = () => get(url(APIS.USER_LIST));
 export const login: (data: LoginReq) => Promise<LoginRes> = (data) => post(url(APIS.LOGIN), data);
 export const visitorLogin: (data: VisitorLoginReq) => Promise<VisitorLoginRes> = (data) => post(url(APIS.LOGIN_VISITOR), data);
+
+export const createRoom: (data: { userId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_CREATE), data);
+export const searchRoom: (data: { roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_SEARCH), data);
+export const joinRoom: (data: { userId: string, roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_JOIN), data);
+export const exitRoom: (data: { userId: string, roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_EXIT), data);

@@ -2,15 +2,16 @@
   <main>
     <div id="main">
 
-      <Head :class="currentView === 'head' ? 'currentView' : 'backView'" />
+      <Head :class="currentView === 'head' ? 'currentView' : 'backView'" :toSearchGamePage="toSearchGamePage"
+        :toSearchRoomPage="toSearchRoomPage" />
 
-      <Body :class="currentView === 'body' ? 'currentView' : 'backView'" />
-      <Room :class="currentView === 'room' ? 'currentView' : 'backView'" />
+      <Body :class="currentView === 'body' ? 'currentView' : 'backView'" :back="back" />
+      <Room :class="currentView === 'room' ? 'currentView' : 'backView'" :back="back" />
 
-      <input type="text" id="search-input" v-model="seacrhStore.searchValue" placeholder="Search games ...">
-      <input type="text" id="roomid-input" v-model="seacrhStore.roomid" placeholder="Search room (by room No.) ...">
+      <!-- <input type="text" id="search-input" v-model="seacrhStore.searchValue" placeholder="Search games ..."> -->
+      <!-- <input type="text" id="roomid-input" v-model="seacrhStore.roomid" placeholder="Search room (by room No.) ..."> -->
 
-      <button id="changeView" @click.prevent="back">BACK</button>
+      <!-- <button class="back-button" @click.prevent="back">BACK</button> -->
     </div>
   </main>
 </template>
@@ -39,6 +40,12 @@ watch(() => seacrhStore.roomid, (val) => {
 
 function back() {
   currentView.value = 'head';
+}
+function toSearchGamePage() {
+  currentView.value = 'body';
+}
+function toSearchRoomPage() {
+  currentView.value = 'room';
 }
 </script>
 

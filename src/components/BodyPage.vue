@@ -1,7 +1,7 @@
 <template>
   <div id="body-page">
-    <input type="text" id="search-input-1" v-model="seacrhStore.searchValue" placeholder="Search games ...">
-    <input type="text" id="search-input-2" v-model="seacrhStore.roomid" placeholder="Search games ...">
+    <input type="text" class="search-input" v-model="seacrhStore.searchValue" placeholder="Search games ...">
+    <button class="back-button" @click.prevent="back">BACK</button>
     <div id="games-area">
       <GameCard class="game-item" v-for="game of gameList" :data="game" :id="game.name" />
     </div>
@@ -21,6 +21,13 @@ import GameCard from './GameCard.vue';
 const router = useRouter();
 const seacrhStore = useSearchStore();
 const gameList: Ref<GameDetails[]> = ref(gameDetailsList);
+
+type Props = {
+  back: () => void
+}
+const props = withDefaults(defineProps<Props>(), {
+  back: () => (() => { })
+})
 
 watch(() => seacrhStore.searchValue, (val) => {
   const filterList = gameList.value.filter(item => {
@@ -49,6 +56,42 @@ watch(() => seacrhStore.searchValue, (val) => {
   background-color: darkblue;
   height: 100vh;
   padding: 100px;
+}
+
+.search-input {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  height: 30px;
+  padding: 0 10px;
+  min-width: 400px;
+  max-width: 600px;
+  border-radius: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+button:hover {
+  color: cadetblue;
+  background-color: aqua;
+}
+
+button:active {
+  transform: scale(0.8, 0.8);
+  transition-duration: 0.4s;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 #games-area {
