@@ -20,6 +20,7 @@ type Props = {
 }
 const props = withDefaults(defineProps<Props>(), {
   data: () => ({
+    gid: '',
     name: '',
     img: '',
     urlPath: '',

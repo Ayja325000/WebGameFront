@@ -2,11 +2,11 @@
   <main>
     <div id="main">
 
-      <Head :class="currentView === 'head' ? 'currentView' : 'backView'" :toSearchGamePage="toSearchGamePage"
-        :toSearchRoomPage="toSearchRoomPage" />
+      <Head :class="currentView === 'head' ? 'currentView' : 'backView'" v-if="show.head.value"
+        :toSearchGamePage="toSearchGamePage" :toSearchRoomPage="toSearchRoomPage" />
 
-      <Body :class="currentView === 'body' ? 'currentView' : 'backView'" :back="back" />
-      <Room :class="currentView === 'room' ? 'currentView' : 'backView'" :back="back" />
+      <Body :class="currentView === 'body' ? 'currentView' : 'backView'" v-if="show.body.value" :back="back" />
+      <Room :class="currentView === 'room' ? 'currentView' : 'backView'" v-if="show.room.value" :back="back" />
 
       <!-- <input type="text" id="search-input" v-model="seacrhStore.searchValue" placeholder="Search games ..."> -->
       <!-- <input type="text" id="roomid-input" v-model="seacrhStore.roomid" placeholder="Search room (by room No.) ..."> -->
@@ -24,20 +24,19 @@ import Room from '@/components/RoomPage.vue';
 import { useSearchStore } from '@/stores/stateStore';
 
 const currentView = ref('head');
-const seacrhStore = useSearchStore();
+const show: any = {};
+show.head = ref(true);
+show.body = ref(false);
+show.room = ref(false);
 
-watch(() => seacrhStore.searchValue, (val) => {
-  if (val !== '') {
-    currentView.value = 'body';
-  }
+watch(() => currentView.value, (value, oldValue) => {
+  console.log('add', value);
+  show[value].value = true;
+  setTimeout(() => {
+    console.log('remove', oldValue);
+    show[oldValue].value = false;
+  }, 1000);
 })
-
-watch(() => seacrhStore.roomid, (val) => {
-  if (val !== '') {
-    currentView.value = 'room';
-  }
-})
-
 function back() {
   currentView.value = 'head';
 }
@@ -58,22 +57,15 @@ function toSearchRoomPage() {
   min-height: 100vh;
 }
 
-#changeView {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 100;
-}
-
 .currentView {
-  animation: 1.2s slidein;
-  position: fixed;
+  animation: 1.5s slidein;
+  position: absolute;
   z-index: 10;
 }
 
 .backView {
-  animation: 1.2s slideout;
-  position: fixed;
+  animation: 1.5s slideout;
+  position: absolute;
   z-index: -10;
   top: 100vh;
 }
@@ -122,17 +114,17 @@ function toSearchRoomPage() {
 
 @keyframes slideout {
   0% {
-    transform: translate3d(0, 0%, 30);
+    transform: translate3d(0, -100%, 0);
     opacity: 1;
   }
 
   50% {
-    transform: rotate(150deg) translate3d(0, -100%, 0) scale(80%, 80%);
+    transform: rotate(150deg) scale(80%, 80%) translate3d(0, -100%, 0);
     opacity: 0.9;
   }
 
-  90% {
-    transform: rotate(360deg) translate3d(0, 100%, -30) scale(50%, 50%);
+  100% {
+    transform: rotate(0) scale(50%, 50%) translate3d(0, 0, 0);
     opacity: 0.6;
   }
 }

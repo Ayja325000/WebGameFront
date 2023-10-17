@@ -3,7 +3,7 @@
     <input type="text" class="search-input" v-model="seacrhStore.searchValue" placeholder="Search games ...">
     <button class="back-button" @click.prevent="back">BACK</button>
     <div id="games-area">
-      <GameCard class="game-item" v-for="game of gameList" :data="game" :id="game.name" />
+      <GameCard class="game-item" v-for="game of gameList" :data="game" :id="game.gid" />
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@ import GameCard from './GameCard.vue';
 
 const router = useRouter();
 const seacrhStore = useSearchStore();
-const gameList: Ref<GameDetails[]> = ref(gameDetailsList);
+const gameList: Ref<GameDetails[]> = ref([]);
 
 type Props = {
   back: () => void
@@ -28,7 +28,11 @@ type Props = {
 const props = withDefaults(defineProps<Props>(), {
   back: () => (() => { })
 })
-
+gameDetailsList.forEach((item, index) => {
+  setTimeout(() => {
+    gameList.value.push(item);
+  }, (index + 1) * 100);
+})
 watch(() => seacrhStore.searchValue, (val) => {
   const filterList = gameList.value.filter(item => {
     return [item.name, item.type.toString(), item.description].filter(str => str.indexOf(seacrhStore.searchValue) !== -1).length > 0;
@@ -43,7 +47,9 @@ watch(() => seacrhStore.searchValue, (val) => {
   })
   newList.forEach((item, index) => {
     setTimeout(() => {
-      gameList.value.push(item);
+      if (!gameList.value.find(game => game.gid === item.gid)) {
+        gameList.value.push(item);
+      }
     }, (index + 1) * 100);
   })
 })
@@ -101,7 +107,6 @@ button:active {
   bottom: 0;
   display: flex;
   flex-wrap: wrap;
-  padding: auto;
   /* 设置为wrap，使项目自动换行 */
   justify-content: flex-start;
   /* 项目水平靠左对齐 */

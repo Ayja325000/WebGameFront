@@ -1,9 +1,14 @@
 <template>
   <div id='head-page'>
-    <button @click.prevent="logout" id="logout">Logout</button>
+    <div id="head-page-body">
 
-    <button id="search-button" @click="toSearchGamePage">Search Games</button>
-    <button id="roomid-button" @click="toSearchRoomPage">Search Room</button>
+      <div class="background"></div>
+      <button @click.prevent="logout" id="logout">Logout</button>
+
+      <button id="search-button" @click="toSearchGamePage">Search Games</button>
+      <button id="roomid-button" @click="toSearchRoomPage">Search Room</button>
+    </div>
+    <StarRain />
   </div>
 </template>
 
@@ -13,6 +18,7 @@ import { clearUserInfo } from '@/utils/localStorage'
 import { useRouter } from 'vue-router';
 import { ROUTERS } from '@/router';
 import { debounce } from '@/utils';
+import StarRain from './canvasBg/StarRain.vue';
 
 const router = useRouter();
 
@@ -36,6 +42,25 @@ function logout() {
   height: 100vh;
   width: 100vw;
   background-color: aqua;
+}
+
+#head-page-body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('../assets/imgs/yarn-hero.webp');
+    background-size: 100% 110%;
+    overflow: visible;
+    pointer-events: unset;
+    z-index: -1;
+  }
 }
 
 button {

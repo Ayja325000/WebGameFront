@@ -30,6 +30,7 @@ function tryStartCodeRain() {
     }
 
     function draw() {
+      console.log("Render CodeRain...")
       drawMask();
       const fz = colWidth;
       ctx.fillStyle = getRandomColor();
@@ -41,6 +42,9 @@ function tryStartCodeRain() {
         if (y > height.value && Math.random() > 0.8) {
           colNextIndexes[i] = 0;
         }
+      }
+      if (document.getElementById('canvas-bg') !== null) {
+        requestAnimationFrame(draw);
       }
     }
 
@@ -67,7 +71,7 @@ function tryStartCodeRain() {
     ctx.fillStyle = 'rgba(0,0,0,0.1)';
     ctx.fillRect(0, 0, width.value, height.value);
 
-    setInterval(draw, 40);
+    draw();
   }
 }
 tryStartCodeRain();

@@ -1,27 +1,30 @@
 <template>
   <div class="login-page">
-    <h1>Login</h1>
-    <form @submit.prevent="visitorLogin" v-if="isVisitor">
-      <div class="form-group">
-        <label for="nickname">Please input a nickname:</label>
-        <input type="text" id="nickname" v-model="nickname" required>
-      </div>
-      <button type="submit">Enter</button>
-      <span @click.prevent="changeLoginType">Change to User Login.</span>
-    </form>
-    <form @submit.prevent="login" v-else>
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" v-model="username" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required>
-      </div>
-      <button type="submit">Login</button>
-      <span @click.prevent="changeLoginType">Change to visitor Login.</span>
-    </form>
-    <p v-if="error" class="error">{{ error }}</p>
+    <div class="login-view">
+      <h1>Login</h1>
+      <form @submit.prevent="visitorLogin" v-if="isVisitor" class="login-form">
+        <div class="form-group">
+          <label for="nickname">Please input a nickname:</label>
+          <input type="text" id="nickname" v-model="nickname" required>
+        </div>
+        <button type="submit">Enter</button>
+        <span @click.prevent="changeLoginType">Change to User Login.</span>
+      </form>
+      <form @submit.prevent="login" v-else class="login-form">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" v-model="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" v-model="password" required>
+        </div>
+        <button type="submit">Login</button>
+        <span @click.prevent="changeLoginType">Change to visitor Login.</span>
+      </form>
+      <p v-if="error" class="error">{{ error }}</p>
+    </div>
+    <PlayGame class="decoration-bg" />
   </div>
   <CodeRain />
 </template>
@@ -30,9 +33,10 @@
 import { ref } from 'vue';
 import { login as loginRequest, visitorLogin as visitorRequest } from '@/apis';
 import { useRouter } from 'vue-router';
-import CodeRain from '@/components/CodeRain.vue';
+import CodeRain from '@/components/canvasBg/CodeRain.vue';
 import { KEYS, LOGIN_STATUS, setLocalStore } from '@/utils/localStorage';
 import { ROUTERS } from '@/router';
+import PlayGame from '@/components/svgs/PlayGame.vue';
 
 const isVisitor = ref(false);
 const username = ref('');
@@ -83,9 +87,16 @@ const changeLoginType = () => {
 
 <style>
 .login-page {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 80vw;
+  justify-content: center;
+}
+
+.login-view {
   background-color: black;
-  max-width: 300px;
-  margin: 0 auto;
+  width: 300px;
+  margin: auto 0;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -115,7 +126,7 @@ button {
   border-radius: 3px;
 }
 
-span {
+.login-form>span {
   font-size: smaller;
   text-decoration: underline;
   margin: 20px;
@@ -124,5 +135,9 @@ span {
 
 .error {
   color: red;
+}
+
+.decoration-bg {
+  mix-blend-mode: lighten;
 }
 </style>
