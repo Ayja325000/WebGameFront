@@ -1,3 +1,4 @@
+import type { GameDetails } from "@/utils/game";
 import type { LoginReq, LoginRes, userId, VisitorLoginReq, VisitorLoginRes } from "./typedef";
 
 // GET method implementation:
@@ -47,7 +48,7 @@ export const getUsers: () => Promise<userId[]> = () => get(url(APIS.USER_LIST));
 export const login: (data: LoginReq) => Promise<LoginRes> = (data) => post(url(APIS.LOGIN), data);
 export const visitorLogin: (data: VisitorLoginReq) => Promise<VisitorLoginRes> = (data) => post(url(APIS.LOGIN_VISITOR), data);
 
-export const createRoom: (data: { userId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_CREATE), data);
+export const createRoom: (data: { userId: string, gameId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_CREATE), data);
 export const searchRoom: (data: { roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_SEARCH), data);
 export const joinRoom: (data: { userId: string, roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_JOIN), data);
 export const exitRoom: (data: { userId: string, roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_EXIT), data);

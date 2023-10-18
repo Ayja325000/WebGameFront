@@ -58,13 +58,13 @@ function toSearchRoomPage() {
 }
 
 .currentView {
-  animation: 1.5s slidein;
+  animation: 1.2s slidein;
   position: absolute;
   z-index: 10;
 }
 
 .backView {
-  animation: 1.5s slideout;
+  animation: 1.2s slideout;
   position: absolute;
   z-index: -10;
   top: 100vh;
@@ -88,7 +88,7 @@ function toSearchRoomPage() {
 
 @keyframes slidein {
   0% {
-    transform: translate3d(0, 0%, -30) scale(50%, 50%);
+    transform: rotate(120deg) translate3d(0, 0%, -30) scale(50%, 50%);
     opacity: 0;
   }
 

@@ -46,8 +46,12 @@ const error = ref('');
 const router = useRouter();
 
 const login = () => {
+  const timer = setTimeout(() => {
+    error.value = 'Login Failed.';
+  }, 1000);
   loginRequest({ username: username.value, password: password.value })
     .then((res) => {
+      clearTimeout(timer);
       if (res.status === 0) {
         console.log(res);
         setLocalStore({
@@ -58,13 +62,19 @@ const login = () => {
         });
         router.push({ path: ROUTERS.HOME });
       } else {
-        error.value = res.message ?? '';
+        error.value = res.message ?? 'Login Failed.';
       }
     });
 };
 
 const visitorLogin = async () => {
+  const timer = setTimeout(() => {
+    error.value = 'Login Failed.';
+  }, 1000);
   let res = await visitorRequest({ nickname: nickname.value });
+  if (res) {
+    clearTimeout(timer);
+  }
   if (res.status === 0) {
     console.log(res);
     setLocalStore({
@@ -75,13 +85,16 @@ const visitorLogin = async () => {
     });
     router.push({ path: ROUTERS.HOME });
   } else {
-    error.value = res.message ?? '';
+    error.value = res.message ?? 'Login Failed.';
   }
 }
 
 const changeLoginType = () => {
   error.value = '';
   isVisitor.value = !isVisitor.value;
+  setTimeout(() => {
+    document.querySelector('input')?.focus();
+  }, 200);
 }
 </script>
 

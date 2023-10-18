@@ -10,7 +10,8 @@ export interface GameDetails {
   name: string,
   img: string,
   urlPath: string,
-  type: GameType[] | GameType,
+  type: GameType,
+  tags: string[]
   description: string,
 }
 export const gameDetailsList: GameDetails[] = [{
@@ -19,6 +20,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: '',
   type: GameType.SINGER,
+  tags: ['Tag1', 'Tag2', 'Tag3'],
   description: 'TEST.'
 }, {
   gid: 'snack_game_0',
@@ -26,6 +28,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
+  tags: ['Tag1', 'Tag2', 'Tag3', 'Tag1', 'Tag2', 'Tag3', 'Tag1', 'Tag2', 'Tag3'],
   description: 'Classical Snack Game.'
 }, {
   gid: 'klee_catch_nahida_0',
@@ -33,6 +36,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: 'http://124.220.108.199:5500/KleeCatchNahida/',
   type: GameType.DOUBLE,
+  tags: ['Tag1', 'Tag2', 'Tag3'],
   description: 'Klee trys to catch Nahida, while Nahida trys to get out of the way.'
 }, {
   gid: 'snack_game_1',
@@ -40,6 +44,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
+  tags: ['Tag1', 'Tag2', 'Tag3'],
   description: 'Classical Snack Game.'
 }, {
   gid: 'klee_catch_nahida_1',
@@ -47,6 +52,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: 'http://124.220.108.199:5500/KleeCatchNahida/',
   type: GameType.DOUBLE,
+  tags: ['Tag1', 'Tag2'],
   description: 'Klee trys to catch Nahida, while Nahida trys to get out of the way.'
 }, {
   gid: 'snack_game_2',
@@ -54,6 +60,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
+  tags: ['Tag1', 'Tag2'],
   description: 'Classical Snack Game.'
 }, {
   gid: 'klee_catch_nahida_2',
@@ -61,6 +68,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: 'http://124.220.108.199:5500/KleeCatchNahida/',
   type: GameType.DOUBLE,
+  tags: ['Tag1', 'Tag2'],
   description: 'Klee trys to catch Nahida, while Nahida trys to get out of the way.'
 }, {
   gid: 'snack_game_3',
@@ -68,6 +76,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
+  tags: ['Tag1'],
   description: 'Classical Snack Game.'
 }, {
   gid: 'snack_game_4',
@@ -75,6 +84,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
+  tags: ['Tag1'],
   description: 'Classical Snack Game.'
 }, {
   gid: 'snack_game_5',
@@ -82,6 +92,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
+  tags: [],
   description: 'Classical Snack Game.'
 }, {
   gid: 'snack_game_6',
@@ -89,6 +100,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
+  tags: [],
   description: 'Classical Snack Game.'
 }, {
   gid: 'snack_game_7',
@@ -96,6 +108,7 @@ export const gameDetailsList: GameDetails[] = [{
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
+  tags: [],
   description: 'Classical Snack Game.'
 }];
 

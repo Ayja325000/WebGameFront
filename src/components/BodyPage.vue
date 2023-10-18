@@ -3,25 +3,25 @@
     <input type="text" class="search-input" v-model="seacrhStore.searchValue" placeholder="Search games ...">
     <button class="back-button" @click.prevent="back">BACK</button>
     <div id="games-area">
-      <GameCard class="game-item" v-for="game of gameList" :data="game" :id="game.gid" />
+      <GameCard class="game-item" v-for="game of gameList" :data="game" :id="game.gid" :play="startPlay(game)" />
     </div>
   </div>
 </template>
 
 <script setup lang='ts'>
 import { ref, watch, type Ref } from 'vue';
-import { clearUserInfo } from '@/utils/localStorage'
+import { clearUserInfo, getUserInfo } from '@/utils/localStorage'
 import { useRouter } from 'vue-router';
-import { ROUTERS } from '@/router';
+import { ROUTERS, toRoomRouter } from '@/router';
 import { debounce } from '@/utils';
 import { useSearchStore } from '@/stores/stateStore';
 import { gameDetailsList, type GameDetails } from '@/utils/game';
 import GameCard from './GameCard.vue';
+import { createRoom } from '@/apis';
 
 const router = useRouter();
 const seacrhStore = useSearchStore();
 const gameList: Ref<GameDetails[]> = ref([]);
-
 type Props = {
   back: () => void
 }
@@ -53,7 +53,32 @@ watch(() => seacrhStore.searchValue, (val) => {
     }, (index + 1) * 100);
   })
 })
+const startPlay = (game: GameDetails) => {
+  return async () => {
+    const userInfo = getUserInfo();
+    const res = await createRoom({ userId: userInfo.uid, gameId: game.gid });
+    if (res.status === 0) {
+      const roomId = res.data.roomId;
+      router.push(toRoomRouter(roomId, userInfo.uid));
+    } else {
+      console.log(res);
+    }
+  };
+}
 
+setTimeout(() => {
+  const searchInput = document.querySelector('.search-input') as HTMLInputElement;
+  if (searchInput) {
+    searchInput.focus();
+  } else {
+    setTimeout(() => {
+      const searchInput = document.querySelector('.search-input') as HTMLInputElement;
+      if (searchInput) {
+        searchInput.focus();
+      }
+    }, 1000)
+  }
+}, 300);
 </script>
 
 <style scoped>

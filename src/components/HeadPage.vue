@@ -2,7 +2,8 @@
   <div id='head-page'>
     <div id="head-page-body">
 
-      <div class="background"></div>
+      <div class="background-decoration"></div>
+      <div class="background"> </div>
       <button @click.prevent="logout" id="logout">Logout</button>
 
       <button id="search-button" @click="toSearchGamePage">Search Games</button>
@@ -59,6 +60,19 @@ function logout() {
     background-size: 100% 110%;
     overflow: visible;
     pointer-events: unset;
+    z-index: -1;
+
+
+  }
+
+  .background-decoration {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40%;
+    height: 80%;
+    background-image: url('../assets/imgs/helloween.png');
+    background-size: 100% 100%;
     z-index: -1;
   }
 }

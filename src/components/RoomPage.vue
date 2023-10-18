@@ -7,9 +7,9 @@
     </div>
     <button class="back-button" @click.prevent="back">BACK</button>
     <div class="room-result" v-if="roomInfo.roomId">
+      <div class="room-info-id">{{ searchedRoomId }}</div>
       <!-- {{ roomInfo.roomId + roomInfo.members + roomInfo.views + roomInfo.gameId }} -->
       <div class="room-info">
-        <div class="room-info-id">{{ roomInfo.roomId }}</div>
         <div class="room-info-players">{{ roomInfo?.members?.length ?? 0 }} Players</div>
         <div class="room-info-viewers">{{ roomInfo?.views?.length ?? 0 }} Viewers</div>
         <button class="room-button-join">Join</button>
@@ -20,6 +20,7 @@
       </div>
     </div>
     <div class="room-result" v-else>
+      <div class="room-info-id">{{ searchedRoomId }}</div>
       <span>No Result</span>
       <NoSearchResult />
     </div>
@@ -35,6 +36,7 @@ import NoSearchResult from '@/components/svgs/NoSearchResult.vue';
 import GameCard from './GameCard.vue';
 import Particles from "@/components/canvasBg/Particals1.vue";
 const roomId = ref('');
+const searchedRoomId = ref('');
 const roomInfo: Ref<any> = ref({});
 const gameInfo: Ref<GameDetails | undefined> = ref();
 type Props = {
@@ -45,6 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const search = async () => {
+  searchedRoomId.value = roomId.value;
   let res = await searchRoom({ roomId: roomId.value });
   if (res.status === 0) {
     roomInfo.value = res.data;
@@ -56,6 +59,21 @@ const search = async () => {
 watch(() => roomInfo.value.gameId, (value) => {
   gameInfo.value = getGameInfo(value);
 })
+
+
+setTimeout(() => {
+  const searchInput = document.querySelector('.search-input') as HTMLInputElement;
+  if (searchInput) {
+    searchInput.focus();
+  } else {
+    setTimeout(() => {
+      const searchInput = document.querySelector('.search-input') as HTMLInputElement;
+      if (searchInput) {
+        searchInput.focus();
+      }
+    }, 1000)
+  }
+}, 300);
 </script>
 
 <style scoped>
@@ -135,15 +153,26 @@ button:active {
   .game-info {
     position: absolute;
     left: 8%;
-    top: 50%;
+    top: 55%;
     transform: translate(0, -50%);
     transition-duration: 1s;
+  }
+
+  .room-info-id {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: bolder;
+    color: rgba(50, 50, 147, 0.8);
+    text-transform: uppercase;
   }
 
   .room-info {
     position: absolute;
     right: 8%;
-    top: 50%;
+    top: 55%;
     transform: translate(0, -50%);
     width: 45%;
     height: 80%;
@@ -153,10 +182,6 @@ button:active {
       position: absolute;
     }
 
-    .room-info-id {
-      left: 0;
-      top: 0;
-    }
 
     .room-info-players {
       left: 0;

@@ -30,7 +30,7 @@ function tryStartCodeRain() {
     }
 
     function draw() {
-      console.log("Render CodeRain...")
+      // console.log("Render CodeRain...");
       drawMask();
       const fz = colWidth;
       ctx.fillStyle = getRandomColor();

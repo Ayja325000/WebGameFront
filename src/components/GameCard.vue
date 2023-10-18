@@ -2,13 +2,13 @@
   <div class="game-card">
     <text class="game-title">{{ data.name }}</text>
     <img :src="data.img" class="game-coverage" />
-    <div class="game-labels-container">
-      <span v-for="label of data.type" class="game-label">
-        {{ label }}
+    <text :title="data.description" class="game-description">{{ data.description }}</text>
+    <button class="create-room-button" @click="play">Play</button>
+    <div class="tags">
+      <span class="tag" v-for="tag of data.tags.slice(0, 3)">
+        {{ tag }}
       </span>
     </div>
-    <text class="game-description">{{ data.description }}</text>
-    <button class="create-room-button" @click="openPage">Play</button>
   </div>
 </template>
 
@@ -16,7 +16,8 @@
 import type { GameDetails } from '@/utils/game';
 import { ref, reactive } from 'vue';
 type Props = {
-  data: GameDetails
+  data: GameDetails,
+  play: () => void
 }
 const props = withDefaults(defineProps<Props>(), {
   data: () => ({
@@ -24,13 +25,14 @@ const props = withDefaults(defineProps<Props>(), {
     name: '',
     img: '',
     urlPath: '',
-    type: [],
+    type: '',
+    tags: [],
     description: '',
-  } as GameDetails)
+  } as unknown as GameDetails),
+  play: () => {
+    window.open('', '_blank');
+  }
 })
-const openPage = () => {
-  window.open(props.data.urlPath, '_blank');
-}
 </script>
 
 <style scoped>
@@ -72,33 +74,54 @@ const openPage = () => {
   ;
   color: whitesmoke;
   z-index: 50;
+  cursor: default;
+}
+
+.tags {
+  position: absolute;
+  top: 0;
+  right: 0;
+  max-width: 100%;
+  z-index: 50;
+
+  .tag {
+    margin: 3px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    font-size: smaller;
+    padding: 0 3px 3px 3px;
+    border-radius: 4px;
+    border: 1px solid gold;
+    box-shadow: 0 0 3px 1px pink;
+    cursor: default;
+  }
 }
 
 .game-description {
   position: absolute;
   top: calc(var(--card-height)*0.5);
-  transform: translate(0, 10%);
   z-index: 50;
   width: var(--card-width);
-  height: calc(var(--card-height)*0.3);
-  padding: 10px;
+  --height: calc(var(--card-height)*0.3);
+  font-size: calc(var(--height)/4);
+  height: var(--height);
+  padding: 5px 10px;
   color: black;
-  white-space: nowrap;
-  /* 防止文字换行 */
-  text-overflow: ellipsis;
-  /* 超出部分显示省略号 */
+  word-break: keep-all;
   overflow: hidden;
-  /* 隐藏溢出的文本 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  cursor: default;
 }
 
-
 button {
-  padding: 10px 20px;
+  padding: 8px 16px;
   background-color: #007bff;
   color: #fff;
   border: none;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 16px;
 }
 
 button:hover {
@@ -114,7 +137,7 @@ button:active {
 .create-room-button {
   position: absolute;
   bottom: calc(var(--card-height)*0.05);
-  right: 10px;
+  right: 10%;
   z-index: 50;
 }
 

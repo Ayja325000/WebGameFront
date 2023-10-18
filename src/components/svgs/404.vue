@@ -1,6 +1,6 @@
 <template>
-  <svg height="1024" node-id="1" sillyvg="true" template-height="1024" template-width="1024" version="1.1"
-    viewBox="0 0 1024 1024" width="1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg height="100vh" node-id="1" sillyvg="true" template-height="1024" template-width="1024" version="1.1"
+    viewBox="0 0 1024 1024" width="100vw" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs node-id="29"></defs>
     <g node-id="135">
       <g node-id="137">

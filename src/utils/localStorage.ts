@@ -2,7 +2,7 @@ import type { UserInfo } from "@/apis/typedef";
 
 export enum KEYS {
   LOGIN_STATUS = 'loginStatus',
-  UID = 'userId',
+  UID = 'uid',
   USER_NAME = 'username',
   NICK_NAME = 'nickname',
   COOKIE = 'cookie'
