@@ -28,7 +28,8 @@ async function post(url = "", data = {}): Promise<any> {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
-const address = 'http://127.0.0.1/api/';
+// const address = 'http://127.0.0.1/api/';
+const address = 'http://124.220.108.199/api/';
 const url = (path: string) => {
   return address + path;
 }

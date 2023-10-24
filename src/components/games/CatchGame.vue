@@ -2,18 +2,31 @@
   <!-- <div>KLEE ===> {{ dataStore.klee }}</div>
   <div>NAHIDA => {{ dataStore.nahida }}</div> -->
   <canvas id="game-canvas"></canvas>
+  <div v-if="inMobile" id="direction-wheel">
+    <div class="direction-button direction-up"
+      v-on:touchstart="() => { console.log('start touched'); keysDown[87] = true }"
+      v-on:touchend="() => { console.log('stop touched'); delete keysDown[87] }">↑</div>
+    <div class="direction-button direction-down" v-on:touchstart="() => { keysDown[83] = true }"
+      v-on:touchend="() => { delete keysDown[83] }">↓</div>
+    <div class="direction-button direction-left" v-on:touchstart="() => { keysDown[65] = true }"
+      v-on:touchend="() => { delete keysDown[65] }">←</div>
+    <div class="direction-button direction-right" v-on:touchstart="() => { keysDown[68] = true }"
+      v-on:touchend="() => { delete keysDown[68] }">→</div>
+  </div>
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive, onMounted, watch, onUnmounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { useCatchGameStore } from '@/stores/gameDataStore/CatchGameStore';
 import imgKlee from '@/assets/GameSrc/KleeCatchNahida/images/klee.jpg';
 import imgNahida from '@/assets/GameSrc/KleeCatchNahida/images/nahida.jpg';
 import imgBg from '@/assets/GameSrc/KleeCatchNahida/images/background.jpg';
 import { useWebSocket } from '@/utils/websocket';
 import { getUserInfo } from '@/utils/localStorage';
-import { debounce } from '@/utils';
+import { debounce, isMobile } from '@/utils';
 
+const inMobile = isMobile();
+console.log(inMobile);
 const dataStore = useCatchGameStore();
 // type Props = {
 //   ws: {
@@ -27,12 +40,13 @@ const dataStore = useCatchGameStore();
 //     send: () => void
 //   }
 // })
-
-const BOARD_WIDTH = 512;
-const BOARD_HEIGHT = 512;
-const KLEE_WIDTH = 64;
-const KLEE_HEIGHT = 64;
-const speed = BOARD_WIDTH / 2; // movement in pixels per second
+const WINDOW_SIZE = Math.min(window.innerWidth, window.innerHeight) * 0.95;
+const CELL_W = WINDOW_SIZE / 512;
+const BOARD_WIDTH = 512 * CELL_W;//512
+const BOARD_HEIGHT = 512 * CELL_W;//512
+const KLEE_WIDTH = 64 * CELL_W;//64
+const KLEE_HEIGHT = 64 * CELL_W;//64
+const speed = 256 * CELL_W; // movement in pixels per second
 // Handle keyboard controls
 let keysDown: any = {};
 function handleKeyDown(e: KeyboardEvent) {
@@ -127,8 +141,8 @@ onMounted(() => {
     // Reset the game when the player catches a nahida
     var reset = function () {
       // Throw the nahida somewhere on the screen randomly
-      dataStore.setNahida(32 + (Math.random() * (canvas.width - 64)),
-        32 + (Math.random() * (canvas.height - 64)))
+      dataStore.setNahida(32 * CELL_W + (Math.random() * (canvas.width - 64 * CELL_W)),
+        32 * CELL_W + (Math.random() * (canvas.height - 64 * CELL_W)))
     };
 
     const onCaught = debounce(() => {
@@ -190,15 +204,15 @@ onMounted(() => {
     // Draw everything
     var render = function () {
       if (bgReady) {
-        ctx.drawImage(bgImage, 0, 0);
+        ctx.drawImage(bgImage, 0, 0, BOARD_WIDTH, BOARD_HEIGHT);
       }
 
       if (nahidaReady) {
-        ctx.drawImage(nahidaImage, nahida.x, nahida.y);
+        ctx.drawImage(nahidaImage, nahida.x, nahida.y, KLEE_WIDTH, KLEE_HEIGHT);
       }
 
       if (kleeReady) {
-        ctx.drawImage(kleeImage, klee.x, klee.y);
+        ctx.drawImage(kleeImage, klee.x, klee.y, KLEE_WIDTH, KLEE_HEIGHT);
       }
 
       // Score
@@ -206,7 +220,7 @@ onMounted(() => {
       ctx.font = "24px Helvetica";
       ctx.textAlign = "left";
       ctx.textBaseline = "top";
-      ctx.fillText("Klee caught Nahida: " + nahidasCaught, 32, 32);
+      ctx.fillText("Klee caught Nahida: " + nahidasCaught, 32 * CELL_W, 32 * CELL_W);
     };
 
     // The main game loop
@@ -246,9 +260,62 @@ onUnmounted(() => {
 #game-canvas {
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 2.5%;
+  transform: translateX(-50%);
   border: 2px solid wheat;
   border-radius: 10px;
+}
+
+#direction-wheel {
+  position: absolute;
+  opacity: 0.66;
+  --button-size: 25vw;
+  height: calc(var(--button-size)*2.2);
+  width: calc(var(--button-size)*3.3);
+  left: 50%;
+  bottom: 6%;
+  transform: translate(-50%, -10px);
+}
+
+.direction-button {
+  background-color: blueviolet;
+  position: absolute;
+  width: var(--button-size);
+  height: var(--button-size);
+  font-size: calc(var(--button-size)*0.55);
+  text-shadow: red 5px 0 0, red -5px 0 0, red 0 5px 0, red 0 -5px 0;
+  font-weight: bolder;
+  color: rgba(176, 41, 17, 0.7);
+  text-align: center;
+  align-items: start;
+  border: calc(var(--button-size)*.05) yellow solid;
+  border-radius: 20%;
+  box-shadow: 2px 2px 5px 2px violet;
+}
+
+.direction-button:active {
+  filter: grayscale();
+}
+
+.direction-up {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.direction-down {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.direction-left {
+  left: 0;
+  bottom: 0;
+}
+
+.direction-right {
+  right: 0;
+  bottom: 0;
 }
 </style>
