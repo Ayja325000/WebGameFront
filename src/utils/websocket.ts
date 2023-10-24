@@ -13,7 +13,7 @@ export const useWebSocket = (onMessage: (data: any) => void, sessionInfo: {} = {
   }, false)
   ///////onmessage事件监听/////////
   ws.addEventListener('message', e => {
-    console.log('来自服务端的消息->', e);
+    // console.log('来自服务端的消息->', e);
     try {
       const data = JSON.parse(e.data);
       onMessage(data);
@@ -27,7 +27,7 @@ export const useWebSocket = (onMessage: (data: any) => void, sessionInfo: {} = {
   }, false)
   const send = (data: {}) => {
     let time = { time: new Date().getTime() };
-    console.log('向服务端发送->', data, sessionInfo, time);
+    // console.log('向服务端发送->', data, sessionInfo, time);
     let D = Object.assign({}, data, sessionInfo, time);
     ws.send(JSON.stringify(D));
   }

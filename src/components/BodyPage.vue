@@ -10,7 +10,7 @@
 
 <script setup lang='ts'>
 import { ref, watch, type Ref } from 'vue';
-import { clearUserInfo, getUserInfo } from '@/utils/localStorage'
+import { clearUserInfo, getUserInfo, setLocalStore } from '@/utils/localStorage'
 import { useRouter } from 'vue-router';
 import { ROUTERS, toRoomRouter } from '@/router';
 import { debounce } from '@/utils';
@@ -59,6 +59,7 @@ const startPlay = (game: GameDetails) => {
     const res = await createRoom({ userId: userInfo.uid, gameId: game.gid });
     if (res.status === 0) {
       const roomId = res.data.roomId;
+      setLocalStore({ roomId: roomId });
       router.push(toRoomRouter(roomId, userInfo.uid));
     } else {
       console.log(res);

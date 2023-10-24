@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
     <div class="login-view">
-      <h1>Login</h1>
+      <h1 class="title">Login</h1>
       <form @submit.prevent="visitorLogin" v-if="isVisitor" class="login-form">
         <div class="form-group">
           <label for="nickname">Please input a nickname:</label>
@@ -24,7 +24,7 @@
       </form>
       <p v-if="error" class="error">{{ error }}</p>
     </div>
-    <PlayGame class="decoration-bg" />
+    <div class="bg-decoration"></div>
   </div>
   <CodeRain />
 </template>
@@ -99,6 +99,13 @@ const changeLoginType = () => {
 </script>
 
 <style>
+.title {
+  color: #007bff;
+  font-size: 36px;
+  font-weight: bolder;
+  text-shadow: gold 2px 0 0, gold 0 2px 0;
+}
+
 .login-page {
   display: flex;
   flex-direction: row-reverse;
@@ -107,14 +114,30 @@ const changeLoginType = () => {
 }
 
 .login-view {
-  background-color: black;
+  animation: show 1s linear 0.2s;
+  position: absolute;
+  left: 0;
+  top: 40%;
+  transform: translate(30%, -50%);
+  background-color: #623a62;
   width: 300px;
   margin: auto 0;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 5px solid #ccc;
+  border-radius: 35px;
   text-align: center;
+  box-shadow: 2px 2px 10px 2px yellow;
   opacity: 0.8;
+}
+
+@keyframes show {
+  0% {
+    transform: scale(0, 0);
+  }
+
+  50% {
+    transform: scale(2, 2);
+  }
 }
 
 .form-group {
@@ -122,21 +145,28 @@ const changeLoginType = () => {
 }
 
 label {
-  font-weight: bold;
+  font-weight: bolder;
+  font-size: larger;
 }
 
 input {
   width: 100%;
   padding: 5px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 6px 2px #007bff;
 }
 
 button {
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
-  border: none;
+  border: 2px solid pink;
   cursor: pointer;
   border-radius: 3px;
+  font-weight: bolder;
+  border-radius: 18px;
+  text-shadow: gold 1px 0 0, gold 0 1px 0;
+  box-shadow: 2px 2px 4px 2px #ff7b00;
 }
 
 .login-form>span {
@@ -152,5 +182,18 @@ button {
 
 .decoration-bg {
   mix-blend-mode: lighten;
+}
+
+.bg-decoration {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url('../assets/imgs/yarn-hero.webp');
+  background-size: 100% 110%;
+  overflow: visible;
+  pointer-events: unset;
+  z-index: -1;
 }
 </style>

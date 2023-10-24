@@ -79,7 +79,7 @@ const options = {
     },
     size: {
       random: true,
-      value: 6
+      value: 8
     }
   },
   detectRetina: true

@@ -12,6 +12,8 @@
       <!-- <input type="text" id="roomid-input" v-model="seacrhStore.roomid" placeholder="Search room (by room No.) ..."> -->
 
       <!-- <button class="back-button" @click.prevent="back">BACK</button> -->
+
+      <div id="userId">UID: {{ userInfo.uid }}</div>
     </div>
   </main>
 </template>
@@ -22,13 +24,14 @@ import Head from '@/components/HeadPage.vue';
 import Body from '@/components/BodyPage.vue';
 import Room from '@/components/RoomPage.vue';
 import { useSearchStore } from '@/stores/stateStore';
+import { getUserInfo, type getLocalStore } from '@/utils/localStorage';
 
 const currentView = ref('head');
 const show: any = {};
 show.head = ref(true);
 show.body = ref(false);
 show.room = ref(false);
-
+const userInfo = getUserInfo();
 watch(() => currentView.value, (value, oldValue) => {
   console.log('add', value);
   show[value].value = true;
@@ -141,5 +144,16 @@ function toSearchRoomPage() {
   left: 100px;
   top: 40px;
   z-index: 100;
+}
+
+#userId {
+  position: fixed;
+  z-index: 100;
+  right: 5px;
+  bottom: 5px;
+  color: white;
+  opacity: 0.8;
+  text-shadow: #000 1px 0 0, #000 0 1px 0, #000 -1px 0 0, #000 0 -1px 0;
+  font-weight: bold;
 }
 </style>

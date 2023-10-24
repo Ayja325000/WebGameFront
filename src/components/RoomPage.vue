@@ -2,7 +2,7 @@
   <div id="room-page">
     <div class="search-bar">
       <input type="text" class="search-input" @keyup.enter="search" v-model="roomId"
-        placeholder="Search room by roomID ...">
+        placeholder="Search room by RoomNo. ......">
       <button class="search-button" @click.prevent="search">Search</button>
     </div>
     <button class="back-button" @click.prevent="back">BACK</button>
@@ -10,10 +10,10 @@
       <div class="room-info-id">{{ searchedRoomId }}</div>
       <!-- {{ roomInfo.roomId + roomInfo.members + roomInfo.views + roomInfo.gameId }} -->
       <div class="room-info">
-        <div class="room-info-players">{{ roomInfo?.members?.length ?? 0 }} Players</div>
-        <div class="room-info-viewers">{{ roomInfo?.views?.length ?? 0 }} Viewers</div>
-        <button class="room-button-join">Join</button>
-        <button class="room-button-view">View</button>
+        <div class="room-info-players">{{ roomInfo?.members?.length ?? 0 }} Members</div>
+        <div class="room-info-viewers">{{ roomInfo?.views?.length ?? 0 }} Viewing</div>
+        <button class="room-button-join" @click="joinGame">Join</button>
+        <button class="room-button-view" @click="viewGame">View</button>
       </div>
       <div class="game-info">
         <GameCard :data="gameInfo" :id="gameInfo?.gid ?? ''" />
@@ -29,16 +29,21 @@
 </template>
 
 <script setup lang='ts'>
-import { searchRoom } from '@/apis';
+import { joinRoom, searchRoom } from '@/apis';
 import { getGameInfo, type GameDetails } from '@/utils/game';
 import { ref, reactive, type Ref, watch } from 'vue';
 import NoSearchResult from '@/components/svgs/NoSearchResult.vue';
 import GameCard from './GameCard.vue';
 import Particles from "@/components/canvasBg/Particals1.vue";
+import { getUserInfo, setLocalStore } from '@/utils/localStorage';
+import { toRoomRouter } from '@/router';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const roomId = ref('');
 const searchedRoomId = ref('');
 const roomInfo: Ref<any> = ref({});
 const gameInfo: Ref<GameDetails | undefined> = ref();
+const userInfo = getUserInfo();
 type Props = {
   back: () => void
 }
@@ -59,7 +64,17 @@ const search = async () => {
 watch(() => roomInfo.value.gameId, (value) => {
   gameInfo.value = getGameInfo(value);
 })
+const joinGame = async () => {
+  const res = await joinRoom({ userId: userInfo.uid, roomId: searchedRoomId.value });
+  if (res.status === 0) {
 
+    setLocalStore({ roomId: roomId });
+    router.push(toRoomRouter(searchedRoomId.value, userInfo.uid));
+  }
+}
+const viewGame = () => {
+
+}
 
 setTimeout(() => {
   const searchInput = document.querySelector('.search-input') as HTMLInputElement;
@@ -177,20 +192,34 @@ button:active {
     width: 45%;
     height: 80%;
 
-    div,
-    button {
-      position: absolute;
-    }
-
-
     .room-info-players {
-      left: 0;
-      top: 20%;
+      position: absolute;
+      left: 16%;
+      top: 25%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      color: blue;
     }
 
     .room-info-viewers {
-      left: 0;
-      top: 20%;
+      position: absolute;
+      left: 16%;
+      top: 45%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      color: green;
+    }
+
+    .room-button-join {
+      position: absolute;
+      left: 16%;
+      bottom: 10%;
+    }
+
+    .room-button-view {
+      position: absolute;
+      right: 16%;
+      bottom: 10%;
     }
   }
 }
