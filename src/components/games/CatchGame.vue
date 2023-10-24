@@ -6,7 +6,7 @@
 
 <script setup lang='ts'>
 import { ref, reactive, onMounted, watch, onUnmounted } from 'vue';
-import { useCatchGameStore } from '@/stores/gameDataStore/CatchGameStore.ts';
+import { useCatchGameStore } from '@/stores/gameDataStore/CatchGameStore';
 import imgKlee from '@/assets/GameSrc/KleeCatchNahida/images/klee.jpg';
 import imgNahida from '@/assets/GameSrc/KleeCatchNahida/images/nahida.jpg';
 import imgBg from '@/assets/GameSrc/KleeCatchNahida/images/background.jpg';
