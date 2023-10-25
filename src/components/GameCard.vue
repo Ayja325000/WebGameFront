@@ -1,6 +1,6 @@
 <template>
-  <div class="game-card">
-    <text class="game-title">{{ data.name }}</text>
+  <div :class="`game-card ${data.type}`">
+    <text class="game-title" :title="data.name">{{ data.name }}</text>
     <img :src="data.img" class="game-coverage" />
     <text :title="data.description" class="game-description">{{ data.description }}</text>
     <button class="create-room-button" @click="play">Play</button>
@@ -47,8 +47,16 @@ const props = withDefaults(defineProps<Props>(), {
   border-radius: 10px;
   border: 1px solid gray;
   overflow: hidden;
-  box-shadow: 3px 3px 10px 3px black;
+  box-shadow: 3px 3px 10px 3px blue;
   transition-duration: 0.5s;
+}
+
+.local {
+  box-shadow: 3px 3px 10px 3px red;
+}
+
+.test {
+  box-shadow: 3px 3px 10px 3px black;
 }
 
 .game-card:hover {
@@ -70,7 +78,6 @@ const props = withDefaults(defineProps<Props>(), {
   width: 100%;
   padding: 0 8px;
   background: linear-gradient(rgba(0, 0, 0, 0), black);
-  ;
   color: aqua;
   z-index: 50;
   cursor: default;
@@ -90,14 +97,15 @@ const props = withDefaults(defineProps<Props>(), {
   font-weight: bold;
 
   .tag {
-    margin: 3px;
-    background-color: rgba(0, 255, 255, 0.8);
+    margin: 2px;
+    background-color: rgba(100, 255, 255, 0.3);
     color: black;
+    text-shadow: white 1px 0 0, white 0 1px 0, white -1px 0 0, white 0 -1px 0;
     font-size: smaller;
-    padding: 0 3px 3px 3px;
-    border-radius: 4px;
+    padding: 0 2px 2px 2px;
+    border-radius: 3px;
     border: 1px solid gold;
-    box-shadow: 0 0 3px 1px pink;
+    box-shadow: 0 0 4px 2px aqua;
     cursor: default;
   }
 }

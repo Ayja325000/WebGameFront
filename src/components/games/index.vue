@@ -1,6 +1,7 @@
 <template>
   <CatchGame v-if="gameId === 'klee_catch_nahida_0'" :ws="ws" :wsHandlers="wsHandlers" :playerNo="playerNo" />
-  <div v-else class="tips">NOT_DONE...</div>
+  <CatchGame v-else-if="gameId === 'snack_game_0'" :ws="ws" :wsHandlers="wsHandlers" :playerNo="playerNo" />
+  <div v-else class="tips">TEST_EXAMPLE...</div>
 </template>
 
 <script setup lang='ts'>

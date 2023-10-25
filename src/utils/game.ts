@@ -1,9 +1,11 @@
 import { IMAGES } from "./imgs";
 
-enum GameType {
+export enum GameType {
   DOUBLE = 'double',
   SINGER = 'singer',
-  MILUTY = 'mulity'
+  MILUTY = 'mulity',
+  LOCAL = 'local',
+  TEST = 'test'
 }
 export interface GameDetails {
   gid: string,
@@ -24,35 +26,43 @@ export const gameDetailsList: GameDetails[] = [{
   tags: ['Double', 'OnLine', 'Klee'],
   description: 'Klee trys to catch Nahida, while Nahida trys to get out of the way.'
 }, {
+  gid: 'snack_game_0',
+  name: 'Snack Game',
+  img: IMAGES.GAME_COVERAGE.SNACK_GAME,
+  urlPath: 'http://124.220.108.199:5500/SnackGame/',
+  type: GameType.LOCAL,
+  tags: ['Local', 'Snack', 'NotOnline', 'Classical'],
+  description: '[Not Online] Classical Snack Game.'
+}, {
+  gid: 'turn_over_chess',
+  name: 'Turn Over Chess (Local)',
+  img: IMAGES.GAME_COVERAGE.TURN_OVER_CHESS,
+  urlPath: 'http://124.220.108.199:5500/Chesses/FanChesses/',
+  type: GameType.LOCAL,
+  tags: ['Local', 'Chess', 'NotOnline'],
+  description: 'Classical Snack Game.'
+}, {
   gid: 'test_0',
   name: 'TSET  (Cannot)',
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: '',
-  type: GameType.SINGER,
+  type: GameType.TEST,
   tags: ['TSET', 'Tag2', 'Tag3'],
   description: 'TEST.'
 }, {
-  gid: 'snack_game_0',
-  name: 'Snack Game (Cannot)',
-  img: IMAGES.GAME_COVERAGE.SNACK_GAME,
-  urlPath: 'http://124.220.108.199:5500/SnackGame/',
-  type: GameType.SINGER,
-  tags: ['TSET', 'Tag2', 'Tag3', 'Tag1', 'Tag2', 'Tag3', 'Tag1', 'Tag2', 'Tag3'],
-  description: 'Classical Snack Game.'
-}, {
-  gid: 'test_1',
-  name: 'test_1 (Cannot)',
-  img: '',
-  urlPath: 'http://124.220.108.199:5500/SnackGame/',
-  type: GameType.SINGER,
-  tags: ['Tag1', 'Tag2', 'TSET'],
-  description: 'Classical Snack Game.'
+  gid: 'live2d_demo',
+  name: 'Live2D DEMO',
+  img: IMAGES.GAME_COVERAGE.NAHIDA_LIVE2D,
+  urlPath: 'http://124.220.108.199:5501/Samples/TypeScript/Demo/index.html',
+  type: GameType.LOCAL,
+  tags: ['Live2D', 'View', 'Nahida'],
+  description: 'A Live2D test demo. Use model of Nahida.'
 }, {
   gid: 'test_2',
   name: 'test_2 (Cannot)',
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: 'http://124.220.108.199:5500/KleeCatchNahida/',
-  type: GameType.DOUBLE,
+  type: GameType.TEST,
   tags: ['Tag1', 'TSET'],
   description: 'Klee trys to catch Nahida, while Nahida trys to get out of the way.'
 }, {
@@ -60,7 +70,7 @@ export const gameDetailsList: GameDetails[] = [{
   name: 'test_3_HELLO (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
-  type: GameType.SINGER,
+  type: GameType.TEST,
   tags: ['TSET', 'Tag2'],
   description: 'Classical Snack Game.'
 }, {
@@ -68,7 +78,7 @@ export const gameDetailsList: GameDetails[] = [{
   name: 'test_4_QWERT (Cannot)',
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: 'http://124.220.108.199:5500/KleeCatchNahida/',
-  type: GameType.DOUBLE,
+  type: GameType.TEST,
   tags: ['Tag1', 'TSET'],
   description: 'Klee trys to catch Nahida, while Nahida trys to get out of the way.'
 }, {
@@ -76,7 +86,7 @@ export const gameDetailsList: GameDetails[] = [{
   name: 'test_5_kbfawf (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
-  type: GameType.SINGER,
+  type: GameType.TEST,
   tags: ['TSET'],
   description: 'Classical Snack Game.'
 }, {
@@ -84,7 +94,7 @@ export const gameDetailsList: GameDetails[] = [{
   name: 'test_6 (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
-  type: GameType.SINGER,
+  type: GameType.TEST,
   tags: ['TSET'],
   description: 'Classical Snack Game.'
 }, {
@@ -92,7 +102,7 @@ export const gameDetailsList: GameDetails[] = [{
   name: 'test_7 (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
-  type: GameType.SINGER,
+  type: GameType.TEST,
   tags: [],
   description: 'Classical Snack Game.'
 }, {
@@ -100,7 +110,7 @@ export const gameDetailsList: GameDetails[] = [{
   name: 'test_8 (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
-  type: GameType.SINGER,
+  type: GameType.TEST,
   tags: [],
   description: 'Classical Snack Game.'
 }, {
@@ -108,7 +118,7 @@ export const gameDetailsList: GameDetails[] = [{
   name: 'test_9 (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
-  type: GameType.SINGER,
+  type: GameType.TEST,
   tags: [],
   description: 'Classical Snack Game.'
 }];

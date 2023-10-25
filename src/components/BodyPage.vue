@@ -15,7 +15,7 @@ import { getUserInfo, setLocalStore } from '@/utils/localStorage'
 import { useRouter } from 'vue-router';
 import { toRoomRouter } from '@/router';
 import { useSearchStore } from '@/stores/stateStore';
-import { gameDetailsList, type GameDetails } from '@/utils/game';
+import { gameDetailsList, type GameDetails, GameType } from '@/utils/game';
 import GameCard from './GameCard.vue';
 import { createRoom } from '@/apis';
 import StarRain from './canvasBg/StarRain2.vue';
@@ -56,14 +56,18 @@ watch(() => seacrhStore.searchValue, (val) => {
 })
 const startPlay = (game: GameDetails) => {
   return async () => {
-    const userInfo = getUserInfo();
-    const res = await createRoom({ user: JSON.stringify(userInfo), gameId: game.gid });
-    if (res.status === 0) {
-      const roomId = res.data.roomId;
-      setLocalStore({ roomId: roomId });
-      router.push(toRoomRouter(roomId, userInfo.uid));
+    if (game.type === GameType.LOCAL) {
+      window.open(game.urlPath, '_blank');
     } else {
-      console.log(res);
+      const userInfo = getUserInfo();
+      const res = await createRoom({ user: JSON.stringify(userInfo), gameId: game.gid });
+      if (res.status === 0) {
+        const roomId = res.data.roomId;
+        setLocalStore({ roomId: roomId });
+        router.push(toRoomRouter(roomId, userInfo.uid));
+      } else {
+        console.log(res);
+      }
     }
   };
 }
