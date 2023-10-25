@@ -1,5 +1,5 @@
-export const wsUrl = 'ws://127.0.0.1:8888';
-// export const wsUrl = 'ws://124.220.108.199:8888';
+// export const wsUrl = 'ws://127.0.0.1:8888';
+export const wsUrl = 'ws://124.220.108.199:8888';
 
 export const useWebSocket = (onMessage: ((data: any) => void)[], sessionInfo: {} = {}) => {
   const ws = new WebSocket(wsUrl, 'echo-protocol');
