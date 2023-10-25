@@ -14,7 +14,6 @@
 
 <script setup lang='ts'>
 import type { GameDetails } from '@/utils/game';
-import { ref, reactive } from 'vue';
 type Props = {
   data: GameDetails,
   play: () => void
@@ -72,9 +71,14 @@ const props = withDefaults(defineProps<Props>(), {
   padding: 0 8px;
   background: linear-gradient(rgba(0, 0, 0, 0), black);
   ;
-  color: whitesmoke;
+  color: aqua;
   z-index: 50;
   cursor: default;
+  font-weight: bolder;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: gold 0.5px 0 0, gold 0 0.5px 0;
 }
 
 .tags {
@@ -83,10 +87,11 @@ const props = withDefaults(defineProps<Props>(), {
   right: 0;
   max-width: 100%;
   z-index: 50;
+  font-weight: bold;
 
   .tag {
     margin: 3px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 255, 255, 0.8);
     color: black;
     font-size: smaller;
     padding: 0 3px 3px 3px;

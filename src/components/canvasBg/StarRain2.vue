@@ -1,5 +1,5 @@
 <template>
-  <canvas id="canvas-bg-star-rain"></canvas>
+  <canvas id="canvas-bg-star-rain-2"></canvas>
 </template>
 
 <script setup lang='ts'>
@@ -16,12 +16,12 @@ const OVERFLOW_THRESHOLD = 10;
 // 定义星星的数量
 const STAR_COUNT = Math.min((window.innerWidth * window.innerHeight) / 1000, 1600);
 // 获取canvas元素
-let canvas: HTMLCanvasElement = document.querySelector('#canvas-bg-star-rain') as unknown as HTMLCanvasElement;
+let canvas: HTMLCanvasElement = document.querySelector('#canvas-bg-star-rain-2') as unknown as HTMLCanvasElement;
 // 获取canvas的绘图上下文
 let context: any;
 const init = () => {
   if (!canvas) {
-    canvas = document.querySelector('#canvas-bg-star-rain') as unknown as HTMLCanvasElement;
+    canvas = document.querySelector('#canvas-bg-star-rain-2') as unknown as HTMLCanvasElement;
     setTimeout(init);
     return;
   }
@@ -146,7 +146,7 @@ function step() {
   // 绘制星星
   render();
   // 请求下一帧动画
-  if (document.querySelector('#canvas-bg-star-rain') !== null) {
+  if (document.querySelector('#canvas-bg-star-rain-2') !== null) {
     requestAnimationFrame(step);
   }
 }
@@ -240,12 +240,12 @@ init();
 </script>
 
 <style scoped>
-#canvas-bg-star-rain {
+#canvas-bg-star-rain-2 {
   position: fixed;
   left: 0;
   top: 0;
   z-index: -2;
-  background-image: linear-gradient(-225deg, #231557 0%,
-      #43107a 29%, #FF1361 60%);
+  background-image: linear-gradient(-225deg, #bab63c 0%,
+      #4e1d83 29%, #FF1361 60%);
 }
 </style>

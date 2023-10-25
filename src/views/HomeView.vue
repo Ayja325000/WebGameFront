@@ -23,8 +23,7 @@ import { ref, watch } from 'vue';
 import Head from '@/components/HeadPage.vue';
 import Body from '@/components/BodyPage.vue';
 import Room from '@/components/RoomPage.vue';
-import { useSearchStore } from '@/stores/stateStore';
-import { getUserInfo, type getLocalStore } from '@/utils/localStorage';
+import { getUserInfo } from '@/utils/localStorage';
 
 const currentView = ref('head');
 const show: any = {};

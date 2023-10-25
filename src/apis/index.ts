@@ -1,5 +1,10 @@
-import type { GameDetails } from "@/utils/game";
 import type { LoginReq, LoginRes, userId, VisitorLoginReq, VisitorLoginRes } from "./typedef";
+
+const address = 'http://127.0.0.1/api/';
+// const address = 'http://124.220.108.199/api/';
+const url = (path: string) => {
+  return address + path;
+}
 
 // GET method implementation:
 async function get(url = "", params = {}): Promise<any> {
@@ -28,11 +33,6 @@ async function post(url = "", data = {}): Promise<any> {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
-// const address = 'http://127.0.0.1/api/';
-const address = 'http://124.220.108.199/api/';
-const url = (path: string) => {
-  return address + path;
-}
 enum APIS {
   LOGIN = 'login',
   LOGIN_VISITOR = 'visitor-login',
@@ -49,7 +49,7 @@ export const getUsers: () => Promise<userId[]> = () => get(url(APIS.USER_LIST));
 export const login: (data: LoginReq) => Promise<LoginRes> = (data) => post(url(APIS.LOGIN), data);
 export const visitorLogin: (data: VisitorLoginReq) => Promise<VisitorLoginRes> = (data) => post(url(APIS.LOGIN_VISITOR), data);
 
-export const createRoom: (data: { userId: string, gameId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_CREATE), data);
+export const createRoom: (data: { user: string, gameId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_CREATE), data);
 export const searchRoom: (data: { roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_SEARCH), data);
-export const joinRoom: (data: { userId: string, roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_JOIN), data);
-export const exitRoom: (data: { userId: string, roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_EXIT), data);
+export const joinRoom: (data: { user: string, roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_JOIN), data);
+export const exitRoom: (data: { user: string, roomId: string }) => Promise<any> = (data) => post(url(APIS.ROOM_EXIT), data);

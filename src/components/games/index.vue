@@ -1,24 +1,32 @@
 <template>
-  <!-- <div>
-    <div>////gameId:{{ gameId }}</div>
-    <div>////playerNo:{{ playerNo }}</div>
-  </div> -->
-  <CatchGame v-if="gameId === 'klee_catch_nahida_0'" :data="data" />
+  <CatchGame v-if="gameId === 'klee_catch_nahida_0'" :ws="ws" :wsHandlers="wsHandlers" :playerNo="playerNo" />
+  <div v-else class="tips">NOT_DONE...</div>
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive } from 'vue';
 import CatchGame from './CatchGame.vue';
 type Props = {
   gameId: string,
   playerNo: number,
-  data: any
+  ws: {
+    this: WebSocket;
+    send: (data: {}) => void;
+  }
+  wsHandlers: ((data: any) => void)[]
 }
 const props = withDefaults(defineProps<Props>(), {
   gameId: '',
-  data: {},
-  playerNo: -1,
+  playerNo: -1
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.tips {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  font-weight: bolder;
+}
+</style>

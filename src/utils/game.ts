@@ -13,98 +13,99 @@ export interface GameDetails {
   type: GameType,
   tags: string[]
   description: string,
+  maxPlayerNumber?: number
 }
 export const gameDetailsList: GameDetails[] = [{
-  gid: 'test_0',
-  name: 'TSET',
-  img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
-  urlPath: '',
-  type: GameType.SINGER,
-  tags: ['Tag1', 'Tag2', 'Tag3'],
-  description: 'TEST.'
-}, {
-  gid: 'snack_game_0',
-  name: 'Snack Game',
-  img: IMAGES.GAME_COVERAGE.SNACK_GAME,
-  urlPath: 'http://124.220.108.199:5500/SnackGame/',
-  type: GameType.SINGER,
-  tags: ['Tag1', 'Tag2', 'Tag3', 'Tag1', 'Tag2', 'Tag3', 'Tag1', 'Tag2', 'Tag3'],
-  description: 'Classical Snack Game.'
-}, {
   gid: 'klee_catch_nahida_0',
   name: 'Klee Catch Nahida',
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: 'http://124.220.108.199:5500/KleeCatchNahida/',
   type: GameType.DOUBLE,
-  tags: ['Tag1', 'Tag2', 'Tag3'],
+  tags: ['Double', 'OnLine', 'Klee'],
   description: 'Klee trys to catch Nahida, while Nahida trys to get out of the way.'
 }, {
-  gid: 'snack_game_1',
-  name: 'Snack Game 1',
+  gid: 'test_0',
+  name: 'TSET  (Cannot)',
+  img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
+  urlPath: '',
+  type: GameType.SINGER,
+  tags: ['TSET', 'Tag2', 'Tag3'],
+  description: 'TEST.'
+}, {
+  gid: 'snack_game_0',
+  name: 'Snack Game (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
-  tags: ['Tag1', 'Tag2', 'Tag3'],
+  tags: ['TSET', 'Tag2', 'Tag3', 'Tag1', 'Tag2', 'Tag3', 'Tag1', 'Tag2', 'Tag3'],
   description: 'Classical Snack Game.'
 }, {
-  gid: 'klee_catch_nahida_1',
-  name: 'Klee Catch Nahida 1',
+  gid: 'test_1',
+  name: 'test_1 (Cannot)',
+  img: '',
+  urlPath: 'http://124.220.108.199:5500/SnackGame/',
+  type: GameType.SINGER,
+  tags: ['Tag1', 'Tag2', 'TSET'],
+  description: 'Classical Snack Game.'
+}, {
+  gid: 'test_2',
+  name: 'test_2 (Cannot)',
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: 'http://124.220.108.199:5500/KleeCatchNahida/',
   type: GameType.DOUBLE,
-  tags: ['Tag1', 'Tag2'],
+  tags: ['Tag1', 'TSET'],
   description: 'Klee trys to catch Nahida, while Nahida trys to get out of the way.'
 }, {
-  gid: 'snack_game_2',
-  name: 'Snack Game 2',
+  gid: 'test_3',
+  name: 'test_3_HELLO (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
-  tags: ['Tag1', 'Tag2'],
+  tags: ['TSET', 'Tag2'],
   description: 'Classical Snack Game.'
 }, {
-  gid: 'klee_catch_nahida_2',
-  name: 'Klee Catch Nahida 2',
+  gid: 'test_4',
+  name: 'test_4_QWERT (Cannot)',
   img: IMAGES.GAME_COVERAGE.KLEE_CATCH_NAHIDA,
   urlPath: 'http://124.220.108.199:5500/KleeCatchNahida/',
   type: GameType.DOUBLE,
-  tags: ['Tag1', 'Tag2'],
+  tags: ['Tag1', 'TSET'],
   description: 'Klee trys to catch Nahida, while Nahida trys to get out of the way.'
 }, {
-  gid: 'snack_game_3',
-  name: 'Snack Game 3',
+  gid: 'test_5',
+  name: 'test_5_kbfawf (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
-  tags: ['Tag1'],
+  tags: ['TSET'],
   description: 'Classical Snack Game.'
 }, {
-  gid: 'snack_game_4',
-  name: 'Snack Game 4',
+  gid: 'test_6',
+  name: 'test_6 (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
-  tags: ['Tag1'],
+  tags: ['TSET'],
   description: 'Classical Snack Game.'
 }, {
-  gid: 'snack_game_5',
-  name: 'Snack Game 5',
+  gid: 'test_7',
+  name: 'test_7 (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
   tags: [],
   description: 'Classical Snack Game.'
 }, {
-  gid: 'snack_game_6',
-  name: 'Snack Game 6',
+  gid: 'test_8',
+  name: 'test_8 (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,
   tags: [],
   description: 'Classical Snack Game.'
 }, {
-  gid: 'snack_game_7',
-  name: 'Snack Game 7',
+  gid: 'test_9',
+  name: 'test_9 (Cannot)',
   img: IMAGES.GAME_COVERAGE.SNACK_GAME,
   urlPath: 'http://124.220.108.199:5500/SnackGame/',
   type: GameType.SINGER,

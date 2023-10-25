@@ -5,7 +5,7 @@
       <form @submit.prevent="visitorLogin" v-if="isVisitor" class="login-form">
         <div class="form-group">
           <label for="nickname">Please input a nickname:</label>
-          <input type="text" id="nickname" v-model="nickname" required>
+          <input type="text" id="nickname" v-model="nickname" required maxlength="20">
         </div>
         <button type="submit">Enter</button>
         <span @click.prevent="changeLoginType">Change to User Login.</span>
@@ -36,9 +36,8 @@ import { useRouter } from 'vue-router';
 import CodeRain from '@/components/canvasBg/CodeRain.vue';
 import { KEYS, LOGIN_STATUS, setLocalStore } from '@/utils/localStorage';
 import { ROUTERS } from '@/router';
-import PlayGame from '@/components/svgs/PlayGame.vue';
 
-const isVisitor = ref(false);
+const isVisitor = ref(true);
 const username = ref('');
 const password = ref('');
 const nickname = ref('');
@@ -116,9 +115,9 @@ const changeLoginType = () => {
 .login-view {
   animation: show 1s linear 0.2s;
   position: absolute;
-  left: 0;
+  margin-right: auto;
   top: 40%;
-  transform: translate(30%, -50%);
+  transform: translateY(-50%);
   background-color: #623a62;
   width: 300px;
   margin: auto 0;

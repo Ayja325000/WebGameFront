@@ -21,12 +21,24 @@ import { useCatchGameStore } from '@/stores/gameDataStore/CatchGameStore';
 import imgKlee from '@/assets/GameSrc/KleeCatchNahida/images/klee.jpg';
 import imgNahida from '@/assets/GameSrc/KleeCatchNahida/images/nahida.jpg';
 import imgBg from '@/assets/GameSrc/KleeCatchNahida/images/background.jpg';
-import { useWebSocket } from '@/utils/websocket';
 import { getUserInfo } from '@/utils/localStorage';
 import { debounce, isMobile } from '@/utils';
 
+type Props = {
+  playerNo: number,
+  ws: {
+    this: WebSocket;
+    send: (data: {}) => void;
+  }
+  wsHandlers: ((data: any) => void)[]
+}
+const props = withDefaults(defineProps<Props>(), {
+  playerNo: -1
+})
+const playerNo = props.playerNo;
+console.log('playerNo', playerNo);
 const inMobile = isMobile();
-console.log(inMobile);
+console.log('inMobile', inMobile);
 const dataStore = useCatchGameStore();
 // type Props = {
 //   ws: {
@@ -59,26 +71,28 @@ function handleKeyUp(e: KeyboardEvent) {
 // WebSocket ..........
 const userInfo = getUserInfo();
 const handleMessage = (data: any) => {
-  if (data.currentUser !== userInfo.uid) {
+  if (data.messageTag !== 'action') {
+    return;
+  }
+  if (data.playerNo !== playerNo) {
     if (data.name === 'klee') {
-      dataStore.useKlee(data.currentUser);
       dataStore.setKlee(data.x, data.y);
     } else if (data.name === 'nahida') {
-      dataStore.useNahida(data.currentUser);
       dataStore.setNahida(data.x, data.y);
     }
   }
 }
-const ws = useWebSocket(handleMessage, userInfo);
+const ws = props.ws;
+props.wsHandlers.push(handleMessage);
 const send = (data: any) => {
   ws.send(data);
 }
 const wsSendInterval = setInterval(() => {
   let sendData = null;
-  if (dataStore.klee.currentUser === userInfo.uid) {
-    sendData = dataStore.klee;
+  if (playerNo === 0) {
+    sendData = { ...dataStore.klee, messageTag: 'action', playerNo: 0 };
   } else {
-    sendData = dataStore.nahida;
+    sendData = { ...dataStore.nahida, messageTag: 'action', playerNo: 1 };
   }
   if (sendData) {
     send(sendData);
@@ -86,19 +100,12 @@ const wsSendInterval = setInterval(() => {
 }, 16);
 
 let me = '';
-setTimeout(() => {
-  if (dataStore.useKlee(userInfo.uid)) {
-    me = 'klee';
-  } else if (dataStore.useNahida(userInfo.uid)) {
-    me = 'nahida';
-  }
-}, 1000);
 
 onMounted(() => {
   setTimeout(() => {
     // Create the canvas
     // var canvas = document.createElement("canvas");
-    const canvas: HTMLCanvasElement = document.getElementById("game-canvas")! as HTMLCanvasElement;
+    const canvas: HTMLCanvasElement = document.querySelector("#game-canvas")! as HTMLCanvasElement;
     const ctx = canvas.getContext("2d")!;
     canvas.width = BOARD_WIDTH;
     canvas.height = BOARD_HEIGHT;
@@ -151,7 +158,7 @@ onMounted(() => {
 
     // Update game objects
     const update = function (modifier: number) {
-      if (me === 'klee') {
+      if (playerNo === 0) {
         if (87 in keysDown) { // Player holding up
           klee.y -= speed * modifier;
         }
@@ -168,7 +175,7 @@ onMounted(() => {
         klee.x = Math.max(klee.x, 0);
         klee.y = Math.min(klee.y, BOARD_HEIGHT - KLEE_HEIGHT);
         klee.y = Math.max(klee.y, 0);
-      } else if (me === 'nahida') {
+      } else if (playerNo === 1) {
         if (87 in keysDown) { // Player holding up
           nahida.y -= speed * modifier * 2;
         }
@@ -194,7 +201,7 @@ onMounted(() => {
         && klee.y <= (nahida.y + KLEE_HEIGHT / 2)
         && nahida.y <= (klee.y + KLEE_HEIGHT / 2)
       ) {
-        if (me === 'nahida') {
+        if (playerNo === 1) {
           reset();
         }
         onCaught();

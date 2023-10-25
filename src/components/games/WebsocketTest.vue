@@ -17,7 +17,7 @@ const userInfo = getUserInfo();
 const handleMessage = (data: any) => {
   messages.value.push('Server:', data);
 }
-const ws = useWebSocket(handleMessage, userInfo);
+const ws = useWebSocket([handleMessage], userInfo);
 const send = () => {
   let msg = 'Hello World.';
   messages.value.push('Me: ' + msg);

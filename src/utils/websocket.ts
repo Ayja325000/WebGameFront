@@ -1,7 +1,7 @@
-// export const wsUrl = 'ws://127.0.0.1:8888';
-export const wsUrl = 'ws://124.220.108.199:8888';
+export const wsUrl = 'ws://127.0.0.1:8888';
+// export const wsUrl = 'ws://124.220.108.199:8888';
 
-export const useWebSocket = (onMessage: (data: any) => void, sessionInfo: {} = {}) => {
+export const useWebSocket = (onMessage: ((data: any) => void)[], sessionInfo: {} = {}) => {
   const ws = new WebSocket(wsUrl, 'echo-protocol');
   //onopen事件监听
   ws.addEventListener('open', e => {
@@ -16,9 +16,13 @@ export const useWebSocket = (onMessage: (data: any) => void, sessionInfo: {} = {
     // console.log('来自服务端的消息->', e);
     try {
       const data = JSON.parse(e.data);
-      onMessage(data);
+      onMessage.forEach(fn => {
+        fn(data);
+      });
     } catch (err) {
-      onMessage(e.data);
+      onMessage.forEach(fn => {
+        fn(e.data);
+      });
     }
   }, false)
   //onerror事件监听

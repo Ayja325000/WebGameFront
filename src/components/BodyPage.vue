@@ -5,19 +5,20 @@
     <div id="games-area">
       <GameCard class="game-item" v-for="game of gameList" :data="game" :id="game.gid" :play="startPlay(game)" />
     </div>
+    <StarRain />
   </div>
 </template>
 
 <script setup lang='ts'>
 import { ref, watch, type Ref } from 'vue';
-import { clearUserInfo, getUserInfo, setLocalStore } from '@/utils/localStorage'
+import { getUserInfo, setLocalStore } from '@/utils/localStorage'
 import { useRouter } from 'vue-router';
-import { ROUTERS, toRoomRouter } from '@/router';
-import { debounce } from '@/utils';
+import { toRoomRouter } from '@/router';
 import { useSearchStore } from '@/stores/stateStore';
 import { gameDetailsList, type GameDetails } from '@/utils/game';
 import GameCard from './GameCard.vue';
 import { createRoom } from '@/apis';
+import StarRain from './canvasBg/StarRain2.vue';
 
 const router = useRouter();
 const seacrhStore = useSearchStore();
@@ -56,7 +57,7 @@ watch(() => seacrhStore.searchValue, (val) => {
 const startPlay = (game: GameDetails) => {
   return async () => {
     const userInfo = getUserInfo();
-    const res = await createRoom({ userId: userInfo.uid, gameId: game.gid });
+    const res = await createRoom({ user: JSON.stringify(userInfo), gameId: game.gid });
     if (res.status === 0) {
       const roomId = res.data.roomId;
       setLocalStore({ roomId: roomId });
@@ -87,27 +88,33 @@ setTimeout(() => {
   width: 100vw;
   background-color: darkblue;
   height: 100vh;
-  padding: 100px;
+  padding: 16%;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 .search-input {
+  font-size: 1em;
   position: absolute;
-  top: 30px;
-  left: 30px;
-  height: 30px;
-  padding: 0 10px;
-  min-width: 400px;
-  max-width: 600px;
-  border-radius: 15px;
+  top: 5%;
+  /* 5% equals 30px */
+  left: 5%;
+  height: 5%;
+  padding: 0 1.67%;
+  min-width: 20%;
+  max-width: 60%;
+  border-radius: 2em;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 0.3em 0.6em;
   background-color: #007bff;
+  font-size: 1.4rem;
   color: #fff;
   border: none;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 2em;
 }
 
 button:hover {
@@ -122,8 +129,8 @@ button:active {
 
 .back-button {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 4%;
+  right: 4%;
 }
 
 #games-area {
@@ -154,6 +161,6 @@ button:active {
 }
 
 .game-item {
-  margin: 20px;
+  margin: 1.2%;
 }
 </style>
