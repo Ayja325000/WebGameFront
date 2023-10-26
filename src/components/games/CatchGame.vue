@@ -58,7 +58,7 @@ const BOARD_WIDTH = 512 * CELL_W;//512
 const BOARD_HEIGHT = 512 * CELL_W;//512
 const KLEE_WIDTH = 64 * CELL_W;//64
 const KLEE_HEIGHT = 64 * CELL_W;//64
-const speed = 256 * CELL_W; // movement in pixels per second
+const speed = 16 * CELL_W; // movement in pixels per second
 // Handle keyboard controls
 let keysDown: any = {};
 function handleKeyDown(e: KeyboardEvent) {
